@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %} titre {% endblock %}</title>
+{% block stylesheets %}
+	{# Importation de bootstrap et le theme materia de bootswatch #}
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.0/dist/materia/bootstrap.min.css">
+{% endblock %}
+</head>
+
+<body>
+
+	{% block header %}
+	{% include "navigation/header.html.twig" %}
+
+	{% endblock %}
+
+	{% block body %}{% endblock %}
+</body>
+</html>
