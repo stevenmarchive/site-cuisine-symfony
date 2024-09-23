@@ -15,6 +15,6 @@ class HomeController extends AbstractController
 	{
 
 		// Connecte le controller avec le template
-		return $this->render('accueil/accueil.html.twig');
+		return $this->render('page/accueil.html.twig');
 	}
 }
