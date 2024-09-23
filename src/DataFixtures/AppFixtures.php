@@ -29,7 +29,7 @@ class AppFixtures extends Fixture
     {
 
         // Boucle qui va créer 50 objets Ingredient
-        for ($i = 1; $i <= 10; $i++) {
+        for ($i = 1; $i <= 50; $i++) {
 
             // Création d'une nouvelle instance de l'entité Ingredient
             $ingredient = new Ingredient();

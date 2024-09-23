@@ -4,11 +4,12 @@ namespace App\Entity;
 
 use App\Repository\IngredientRepository;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 // Utilisation d'un alias pour simplifier l'appel des contraintes de validation Symfony
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: IngredientRepository::class)]
+#[UniqueEntity('nom')]
 class Ingredient
 {
     #[ORM\Id]
