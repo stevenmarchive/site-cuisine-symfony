@@ -10,11 +10,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
 
-	#[Route('/', 'home.index', methods: ['GET'])]
+	#[Route('/', 'accueil.index', methods: ['GET'])]
 	public function index(): Response
 	{
 
 		// Connecte le controller avec le template
-		return $this->render('home.html.twig');
+		return $this->render('accueil/accueil.html.twig');
 	}
 }
