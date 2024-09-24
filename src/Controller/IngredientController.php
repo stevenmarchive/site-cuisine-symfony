@@ -82,16 +82,13 @@ class IngredientController extends AbstractController
             $manager->flush();
 
             // Ajoute un message flash pour informer l'utilisateur que l'ingrédient a été créé avec succès
-            $this->addFlash(
-                'success',
-                'Votre ingrédient a été crée avec succès.'
-            );
+            $this->addFlash('success', 'Votre ingrédient a été crée avec succès.');
 
             // Redirige l'utilisateur vers la route 'ingredient_index' (la liste des ingrédients)
             return $this->redirectToRoute('ingredientIndex');
         }
 
-        // Rend la vue Twig du formulaire pour la création d'un nouvel ingrédient
+        // Rend la vue Twig du formulaire pour la 0création d'un nouvel ingrédient
         return $this->render('page/ingredient/nouveau.html.twig', ['form' => $form->createView()]);
     }
 
@@ -136,10 +133,7 @@ class IngredientController extends AbstractController
             $manager->flush();
 
             // Ajoute un message flash pour informer l'utilisateur que la modification a été effectuée avec succès
-            $this->addFlash(
-                'success',
-                'Votre ingrédient a été modifier avec succès.'
-            );
+            $this->addFlash('success', 'Votre ingrédient a été modifier avec succès.');
 
             // Redirige l'utilisateur vers la liste des ingrédients après modification
             return $this->redirectToRoute('ingredientIndex');
@@ -147,5 +141,50 @@ class IngredientController extends AbstractController
 
         // Rend la vue Twig avec le formulaire de modification d'ingrédient
         return $this->render('page/ingredient/modification.html.twig', ['form' => $form->createView()]);
+    }
+
+
+    /**
+     * Supprime un ingrédient de la base de données.
+     *
+     * Cette méthode récupère un ingrédient via son identifiant, le supprime
+     * et applique les changements en base de données. Elle gère également
+     * les cas où l'ingrédient n'est pas trouvé et ajoute des messages flash
+     * pour informer l'utilisateur du résultat de l'opération.
+     *
+     * @param int $id L'identifiant de l'ingrédient à supprimer.
+     * @param IngredientRepository $repository Le repository utilisé pour récupérer l'ingrédient.
+     * @param Request $request La requête HTTP en cours (non utilisée dans cette méthode).
+     * @param EntityManagerInterface $manager L'EntityManager permettant de gérer la suppression de l'ingrédient.
+     *
+     * @return Response Redirige vers la liste des ingrédients après la suppression.
+     */
+    #[Route('/ingredient/suppression/{id}', name: 'ingredientDelete', methods: ['GET'])]
+
+    // Fonction publique pour la suppression d'un ingrédient, prenant en paramètres l'id, le repository, la requête et l'EntityManager
+    public function suppression(int $id, IngredientRepository $repository, Request $request, EntityManagerInterface $manager): Response
+    {
+
+        // Récupère l'ingrédient correspondant à l'identifiant donné en utilisant le repository
+        $ingredient = $repository->findOneBy(['id' => $id]);
+
+        // Vérifie si l'ingrédient n'a pas été trouvé
+        if (!$ingredient) {
+
+            // Ajoute un message flash indiquant que l'ingrédient n'a pas été trouvé
+            $this->addFlash('success', "L'ingrédient en question n'a pas été trouvé");
+        }
+
+        // Supprime l'ingrédient trouvé à l'aide du manager
+        $manager->remove($ingredient);
+
+        // Applique les changements en base de données
+        $manager->flush();
+
+        // Ajoute un message flash indiquant que l'ingrédient a été modifié avec succès (Erreur de message ici, il s'agit d'une suppression)
+        $this->addFlash('success', 'Votre ingrédient a été modifier avec succès.');
+
+        // Redirige vers la route de la liste des ingrédients après la suppression
+        return $this->redirectToRoute('ingredientIndex');
     }
 }
